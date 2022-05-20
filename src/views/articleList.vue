@@ -3,14 +3,14 @@
  * @Author: taoman
  * @Date: 2022-05-05 13:47:13
  * @LastEditors: taoman
- * @LastEditTime: 2022-05-07 10:54:43
+ * @LastEditTime: 2022-05-18 14:00:51
 -->
 <template>
-  <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center bg-black scrollbar">
+  <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center  scrollbar">
     <div
       v-for="item in artList"
       :key="item.id"
-      class="w-4/6 h-28 p-3 box-border overflow-hidden flex-shrink-0 mb-8 bg-white bg-opacity-75 rounded-lg "
+      class="w-3/4 h-28 p-3 box-border overflow-hidden flex-shrink-0 mb-8 bg-white bg-opacity-75 rounded-lg "
       @click="detail(item.id)"
     >
       <div class="flex justify-between content-center text-base font-mono">

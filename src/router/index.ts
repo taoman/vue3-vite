@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-04-26 17:20:07
  * @LastEditors: taoman
- * @LastEditTime: 2022-05-06 09:43:59
+ * @LastEditTime: 2022-05-16 15:37:11
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import login from '../views/login.vue'
@@ -12,6 +12,7 @@ import ArticleList from 'src/views/articleList.vue'
 import ArticleDetail from 'src/views/articleDetail.vue'
 import Archive from 'src/views/archive.vue'
 import Write from 'src/views/write.vue'
+import NotFound from 'src/views/notFound.vue'
 export const routesModuleList = [
   {
     path: '/articleList',
@@ -56,6 +57,10 @@ const routes:RouteRecordRaw[] = [
   {
     path: '/login',
     component: login
+  },
+  {
+    path: '/:pathMatch(.*)',
+    component: NotFound
   }
 
 ]
