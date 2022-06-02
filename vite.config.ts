@@ -6,7 +6,14 @@ import { resolve } from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    hmr: true
+    hmr: true,
+    port: 3000,
+    proxy: {
+      '/article': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
+      }
+    }
   },
   plugins: [
     vue(),

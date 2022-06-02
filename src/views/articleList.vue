@@ -3,12 +3,12 @@
  * @Author: taoman
  * @Date: 2022-05-05 13:47:13
  * @LastEditors: taoman
- * @LastEditTime: 2022-05-18 14:00:51
+ * @LastEditTime: 2022-06-02 16:25:44
 -->
 <template>
   <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center  scrollbar">
     <div
-      v-for="item in artList"
+      v-for="item in state.articleList"
       :key="item.id"
       class="w-3/4 h-28 p-3 box-border overflow-hidden flex-shrink-0 mb-8 bg-white bg-opacity-75 rounded-lg "
       @click="detail(item.id)"
@@ -17,99 +17,77 @@
         <div class="flex">
           <img
             class="w-8 h-8 "
-            src="src/assets/logo.png"
+            :src="item.avatar"
           >
-          <span class="ml-2 font-medium">Taoman</span>
+          <span class="ml-2 font-medium">{{ item.name }}</span>
         </div>
         <div class="subpixel-antialiased">
-          2022-05-06
+          {{ item.create_time }}
         </div>
       </div>
+      <!-- eslint-disable vue/no-v-html -->
       <div
-        class="w-full h-10 overflow-hidden font-mono tracking-widest text-gray-700"
-      >
-        日本防卫省6日称，前往西太平洋训练的解放军海军航母辽宁舰编队连续三天进行了舰载战斗机的起降训练。这个消息让台湾方面联想到解放军军机近来在台湾附近的频繁活动，最终得出一个让他们惊恐的结论——解放军航母正以台湾为背景演练攻防大战。
-
-        日本《产经新闻》6日称，自卫队确认，辽宁舰编队5日在冲绳县宫古岛东南约320公里的太平洋海域进行了舰载战斗机起降训练。这已经是辽宁舰接连第三天在该海域起降战斗机，“防卫省分析称，中国正通过训练提高其航母的作战能力。”
-      </div>
+        class="w-full h-10 mt-2 overflow-hidden font-mono tracking-widest text-gray-700"
+        v-html="item.content"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
+import { onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-interface ArtListType {
-  id:number
-  autor:string
-  date:string
-  content:string
+import { articleIndex } from 'src/request/api/article'
+import { ArticleIndexData } from 'src/interface/article'
 
+interface StateType{
+  articleList:ArticleIndexData[]
 }
-const artList:ArtListType[] = [
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  },
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  },
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  },
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  },
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  },
-  {
-    id: 1,
-    autor: '人工智能',
-    date: '2022-05-06',
-    content: 'content'
-  }
-]
 const router = useRouter()
-const detail = (id:number) => {
+const detail = (id: number) => {
   router.push({
     path: '/articleDetail',
     query: { id }
   })
 }
+const state = reactive<StateType>({
+  articleList: []
+})
+onMounted(async () => {
+  const res = await articleIndex('')
+  state.articleList = res.data
+  // const greeting = 'My name is ${name}, age ${age}, I am a ${job.jobName}'
+  // const employee = {
+  //   name: 'XiaoMing',
+  //   age: 11,
+  //   job: {
+  //     jobName: 'designer',
+  //     jobLevel: 'senior'
+  //   }
+  // }
+  // const result = greeting.render(employee)
+  // console.log(result)
+})
 </script>
 
 <style>
 .scrollbar::-webkit-scrollbar {
-    width: 10px;
-    height: 20px;
-  }
+  width: 10px;
+  height: 20px;
+}
 
 .scrollbar::-webkit-scrollbar-track {
-    border-radius: 100vh;
-    background: #f7f4ed;
+  border-radius: 100vh;
+  background: #f7f4ed;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background: #FBBF24;
-    border-radius: 100vh;
-    border: 3px solid #f6f7ed;
+  background: #FBBF24;
+  border-radius: 100vh;
+  border: 3px solid #f6f7ed;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #c0a0b9;
+  background: #c0a0b9;
 }
 </style>
