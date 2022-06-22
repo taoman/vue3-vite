@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-05-05 13:47:13
  * @LastEditors: taoman
- * @LastEditTime: 2022-06-02 16:25:44
+ * @LastEditTime: 2022-06-22 09:59:51
 -->
 <template>
   <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center  scrollbar">
@@ -35,12 +35,13 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { articleIndex } from 'src/request/api/article'
 import { ArticleIndexData } from 'src/interface/article'
+import { mainStore } from 'src/store'
 
-interface StateType{
+export interface StateType{
   articleList:ArticleIndexData[]
 }
 const router = useRouter()
@@ -53,9 +54,44 @@ const detail = (id: number) => {
 const state = reactive<StateType>({
   articleList: []
 })
-onMounted(async () => {
-  const res = await articleIndex('')
+const key = ref('')
+const main = mainStore()
+const subscribe = main.$subscribe((mutation, state) => {
+  key.value = state.key
+  init()
+})
+// const subscribeNormal = () => {
+//   main.subscribeAction('taoman', true)
+// }
+// const subscribeError = () => {
+//   main.subscribeAction('jie', false)
+// }
+// const unsubscribe = main.$onAction(
+//   ({
+//     name, store, args, after, onError
+//   }) => {
+//     console.log('name', name)
+//     console.log('store实例', store)
+//     console.log('参数', args)
+//     after((result) => {
+//       console.log('result', result)
+//     })
+//     onError(error => {
+//       console.log('error', error)
+//     })
+//   })
+// subscribeNormal()
+// subscribeError()
+// watch(() => main.key, (newValue) => {
+//   key.value = newValue
+//   init()
+// })
+const init = async () => {
+  const res = await articleIndex(key.value)
   state.articleList = res.data
+}
+onMounted(async () => {
+  init()
   // const greeting = 'My name is ${name}, age ${age}, I am a ${job.jobName}'
   // const employee = {
   //   name: 'XiaoMing',

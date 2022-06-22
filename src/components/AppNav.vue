@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-04-27 13:33:15
  * @LastEditors: taoman
- * @LastEditTime: 2022-05-18 14:00:18
+ * @LastEditTime: 2022-06-14 14:41:29
 -->
 <template>
   <div class="w-4/12 h-screen  hidden  md:block ">
@@ -44,7 +44,7 @@
       @click="showDrawer"
     >
       <template #icon>
-        <bars-outlined />
+        <bars-outlined style="color:#fff" />
       </template>
     </a-button>
     <a-drawer
@@ -74,17 +74,18 @@
 </template>
 
 <script setup lang='ts'>
-import { RouteRecordRaw, useRouter } from 'vue-router'
+import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import { routesModuleList } from 'src/router'
 import { computed, ref } from 'vue'
+import { mainStore } from 'src/store/index'
 import {
   BarsOutlined
 } from '@ant-design/icons-vue'
 const renderList = computed(() => {
   return routesModuleList.filter(item => !item.meta.hidden)
 })
-console.log('route', routesModuleList)
 const router = useRouter()
+const route = useRoute()
 const path = ref('/articleList')
 const nav = (e:RouteRecordRaw) => {
   visible.value = false
@@ -92,8 +93,13 @@ const nav = (e:RouteRecordRaw) => {
   router.push(e.path)
 }
 const value = ref('')
+const main = mainStore()
 const search = () => {
-  console.log(value.value)
+  if (route.fullPath !== '/articleList') {
+    router.push('/articleList')
+    value.value = ''
+  }
+  main.$state.key = value.value
 }
 const visible = ref<boolean>(false)
 const showDrawer = () => {

@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-05-05 14:57:56
  * @LastEditors: taoman
- * @LastEditTime: 2022-06-02 15:40:16
+ * @LastEditTime: 2022-06-09 11:08:42
 -->
 <template>
   <div class="flex w-full flex-col justify-center ">
@@ -25,10 +25,12 @@
 <script setup lang='ts'>
 import { reactive } from 'vue'
 import { articleStore } from 'src/request/api/article'
+import { useRouter } from 'vue-router'
 // const content = ref('')
 const state = reactive<{value?:string}>({
   value: undefined
 })
+const router = useRouter()
 const submit = async () => {
   // const random = Math.floor(Math.random() * 10 + 1)
   const data = {
@@ -36,10 +38,11 @@ const submit = async () => {
     name: 'taoman',
     content: state.value
   }
-  console.log(data)
   try {
     const res = await articleStore(data)
-    console.log('res', res)
+    if (res.status === 200) {
+      router.push('/articleList')
+    }
   } catch (error) {
     console.log(error)
   }

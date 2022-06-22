@@ -12,7 +12,7 @@ export const articleIndex = async (key?:string) => {
   return res
 }
 
-export const articleStore = (data:ArticleStoreData) => request({
+export const articleStore = (data:ArticleStoreData) => request<ArticleDetail>({
   url: 'article/create',
   method: 'POST',
   data

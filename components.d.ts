@@ -13,7 +13,6 @@ declare module '@vue/runtime-core' {
     ATimeline: typeof import('ant-design-vue/es')['Timeline']
     ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    Nav: typeof import('./src/components/nav.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
