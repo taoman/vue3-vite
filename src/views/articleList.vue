@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-05-05 13:47:13
  * @LastEditors: taoman
- * @LastEditTime: 2022-06-22 09:59:51
+ * @LastEditTime: 2022-07-12 13:30:50
 -->
 <template>
   <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center  scrollbar">
@@ -35,12 +35,11 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { articleIndex } from 'src/request/api/article'
 import { ArticleIndexData } from 'src/interface/article'
 import { mainStore } from 'src/store'
-
 export interface StateType{
   articleList:ArticleIndexData[]
 }
@@ -86,23 +85,35 @@ const subscribe = main.$subscribe((mutation, state) => {
 //   key.value = newValue
 //   init()
 // })
+// const obj = {
+//   num: 1,
+//   functionParams: () => {
+//     console.log('taoman')
+//   },
+//   objParams: {
+//     a: 1,
+//     b: 2
+//   }
+// }
+// const arr = [1, { a: 1 }]
+// const objCopy = (obj:any) => {
+//   let newObj = null
+//   if (typeof (obj) === 'object' && obj !== null) {
+//     newObj = obj instanceof Array ? [] : {}
+//     for (const i in obj) {
+//       newObj[i] = objCopy(obj[i])
+//     }
+//   } else {
+//     newObj = obj
+//   }
+//   return newObj
+// }
 const init = async () => {
   const res = await articleIndex(key.value)
   state.articleList = res.data
 }
 onMounted(async () => {
   init()
-  // const greeting = 'My name is ${name}, age ${age}, I am a ${job.jobName}'
-  // const employee = {
-  //   name: 'XiaoMing',
-  //   age: 11,
-  //   job: {
-  //     jobName: 'designer',
-  //     jobLevel: 'senior'
-  //   }
-  // }
-  // const result = greeting.render(employee)
-  // console.log(result)
 })
 </script>
 
@@ -125,5 +136,11 @@ onMounted(async () => {
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: #c0a0b9;
+}
+.btn{
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+  color: #fff;
 }
 </style>

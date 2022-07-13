@@ -15,9 +15,12 @@
     }
   },
   "dependencies": {
+    "@sentry/tracing": "^7.6.0",
+    "@sentry/vue": "^7.6.0",
     "@tinymce/tinymce-vue": "^5.0.0",
     "ant-design-vue": "^3.2.2",
     "axios": "^0.27.2",
+    "http-server": "^14.1.1",
     "lodash": "^4.17.21",
     "pinia": "^2.0.14",
     "tinymce": "^6.0.2",

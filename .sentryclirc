@@ -1,0 +1,7 @@
+[auth]
+token="379d7ebe4f8e47f5966d9544cb380b5272e8e1cc86ae40daaafc9f6351b23e2f"
+
+[defaults]
+url = https://sentry.io
+org = "your org"
+project = vue3-vite

@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-04-26 17:20:07
  * @LastEditors: taoman
- * @LastEditTime: 2022-05-16 15:37:11
+ * @LastEditTime: 2022-07-08 10:59:32
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import login from '../views/login.vue'

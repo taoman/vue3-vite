@@ -14,7 +14,7 @@ interface RequestType {
   headers?:AxiosRequestHeaders,
   responseType?:ResponseType
 }
-const baseURL = import.meta.env.VITE_BASE_URL
+const baseURL = import.meta.env.VITE_BASE_URL as string
 console.log('baseURL', baseURL)
 const headerAccept = import.meta.env.VITE_HTTP_HEADER_ACCEPT as string
 const instance = axios.create({
