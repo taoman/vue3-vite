@@ -13,6 +13,7 @@ import ArticleDetail from 'src/views/articleDetail.vue'
 import Archive from 'src/views/archive.vue'
 import Write from 'src/views/write.vue'
 import NotFound from 'src/views/notFound.vue'
+import { negate } from 'lodash'
 export const routesModuleList = [
   {
     path: '/articleList',
@@ -67,4 +68,10 @@ const routes:RouteRecordRaw[] = [
 export const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.token
+  if (to.path !== '/login' && !token)next({ path: '/login' })
+  else next()
 })

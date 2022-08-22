@@ -1,5 +1,8 @@
-import axios, { AxiosRequestHeaders, Method, ResponseType } from 'axios'
+import { message } from 'ant-design-vue'
+import axios, { AxiosRequestConfig, AxiosRequestHeaders, Method, ResponseType } from 'axios'
 import _ from 'lodash'
+import { config } from 'process'
+import { router } from 'src/router'
 type AnyObj = Record<string, any>;
 interface RequestType {
   // 请求地址
@@ -12,18 +15,62 @@ interface RequestType {
   queryParameters?: AnyObj;
   // 请求头
   headers?:AxiosRequestHeaders,
-  responseType?:ResponseType
+  responseType?:ResponseType,
 }
 const baseURL = import.meta.env.VITE_BASE_URL as string
 console.log('baseURL', baseURL)
 const headerAccept = import.meta.env.VITE_HTTP_HEADER_ACCEPT as string
+
+const token = sessionStorage.token
+console.log('token', token)
 const instance = axios.create({
-  baseURL: '/',
+  baseURL: 'https://liquanquan.top/nest/',
   timeout: 20000,
   headers: {
     Accept: headerAccept
+    // Authorization: 'Bearer ' + token
   }
 })
+function addToken (config:AxiosRequestConfig):AxiosRequestConfig {
+  config.headers = {
+    ...config.headers,
+    Authorization: 'Bearer ' + sessionStorage.token
+  }
+  return config
+}
+// instance.interceptors.request.use((config:AxiosRequestConfig) => {
+//   config.headers.Authorization = 'Bearer ' + sessionStorage.token
+//   return config
+// }
+
+instance.interceptors.response.use(response => {
+  // eslint-disable-next-line no-constant-condition
+  if (response.data.statusCode === 200 || 201) {
+    // message.success('请求成功')
+    return Promise.resolve(response)
+  }
+}, error => {
+  console.log('error', error)
+  if (error.response.data.statusCode) {
+    switch (error.response.data.statusCode) {
+      case 400:
+        message.error('账号或密码错误')
+        router.replace({
+          path: '/login'
+        })
+        break
+      case 401:
+        message.error('暂无权限')
+        router.replace({
+          path: '/login'
+        })
+        break
+      case 500:
+        break
+    } return Promise.reject(error.res)
+  }
+})
+instance.interceptors.request.use(addToken)
 async function baseRequest<T = unknown> ({ url, method = 'GET', queryParameters, data, headers, responseType }:RequestType) {
   const res = { data, queryParameters }
   url += '?'
@@ -44,5 +91,12 @@ async function baseRequest<T = unknown> ({ url, method = 'GET', queryParameters,
 }
 export async function request<T = unknown> (data:RequestType) {
   const res = await baseRequest<T>(data)
+  console.log('apk', res)
+  //   if (res.data.statusCode === 400) {
+  //     return message.error(res.data.message)
+  //   } else {
+  //     message.success(res.data.message)
+  //     return (res.data)
+  //   }
   return res.data
 }

@@ -6,21 +6,32 @@
  * @LastEditTime: 2022-07-12 13:30:50
 -->
 <template>
-  <div class="py-8 box-border flex flex-col h-screen  overflow-y-auto items-center  scrollbar">
+  <div
+    class="py-8 box-border flex flex-col h-screen overflow-y-auto items-center scrollbar"
+  >
     <div
       v-for="item in state.articleList"
       :key="item.id"
-      class="w-3/4 h-28 p-3 box-border overflow-hidden flex-shrink-0 mb-8 bg-white bg-opacity-75 rounded-lg "
+      class="w-3/4 h-29 p-3 box-border overflow-hidden flex-shrink-0 mb-8 bg-white bg-opacity-75 rounded-lg"
       @click="detail(item.id)"
     >
+      <img
+        :key="item.id"
+        src="../assets/images/close.png"
+        class="close"
+        alt=""
+        @click.stop="del(item.id)"
+      >
+
       <div class="flex justify-between content-center text-base font-mono">
         <div class="flex">
           <img
-            class="w-8 h-8 "
+            class="w-8 h-8"
             :src="item.avatar"
           >
           <span class="ml-2 font-medium">{{ item.name }}</span>
         </div>
+
         <div class="subpixel-antialiased">
           {{ item.create_time }}
         </div>
@@ -34,14 +45,16 @@
   </div>
 </template>
 
-<script setup lang='ts'>
-import { onMounted, reactive, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, reactive, ref, defineComponent, createVNode } from 'vue'
 import { useRouter } from 'vue-router'
-import { articleIndex } from 'src/request/api/article'
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { articleIndex, deleteDetail } from 'src/request/api/article'
 import { ArticleIndexData } from 'src/interface/article'
 import { mainStore } from 'src/store'
-export interface StateType{
-  articleList:ArticleIndexData[]
+import { Modal } from 'ant-design-vue'
+export interface StateType {
+  articleList: ArticleIndexData[]
 }
 const router = useRouter()
 const detail = (id: number) => {
@@ -50,6 +63,25 @@ const detail = (id: number) => {
     query: { id }
   })
 }
+const del = (id: number) => {
+  Modal.confirm({
+    title: 'Are you sure?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: '删了就没了',
+    async onOk () {
+      const res = await deleteDetail(id)
+      init()
+      console.log('点了ok', res)
+    },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onCancel () {}
+  })
+}
+
+// const del = async (id: number) => {
+//   const res = await deleteDetail(id)
+//   init()
+// }
 const state = reactive<StateType>({
   articleList: []
 })
@@ -59,6 +91,9 @@ const subscribe = main.$subscribe((mutation, state) => {
   key.value = state.key
   init()
 })
+const tou = sessionStorage.avatar
+console.log('tou', tou)
+
 // const subscribeNormal = () => {
 //   main.subscribeAction('taoman', true)
 // }
@@ -118,6 +153,12 @@ onMounted(async () => {
 </script>
 
 <style>
+.close {
+  width: 30px;
+  height: 30px;
+  margin: -12px -12px 0 auto;
+  cursor: pointer;
+}
 .scrollbar::-webkit-scrollbar {
   width: 10px;
   height: 20px;
@@ -129,7 +170,7 @@ onMounted(async () => {
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background: #FBBF24;
+  background: #fbbf24;
   border-radius: 100vh;
   border: 3px solid #f6f7ed;
 }
@@ -137,7 +178,7 @@ onMounted(async () => {
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: #c0a0b9;
 }
-.btn{
+.btn {
   width: 100px;
   height: 100px;
   border: 1px solid red;

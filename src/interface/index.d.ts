@@ -1,5 +1,5 @@
-interface HttpBase<T = unknown> {
+interface HttpBase<T = any> {
   data:T
-  status: number
+  statusCode: number
   message: string
 }

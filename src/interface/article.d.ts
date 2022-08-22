@@ -5,7 +5,7 @@ export interface ArticleIndex {
 }
 export interface ArticleDetail{
   data: ArticleIndexData;
-  status: number;
+  statusCode: number;
   message: string;
 }
 export interface ArticleIndexData {

@@ -21,3 +21,8 @@ export const articleStore = (data:ArticleStoreData) => request<ArticleDetail>({
 export const articleDetail = (id:number) => request<ArticleDetail>({
   url: `article/${id}`
 })
+
+export const deleteDetail = (id:number) => request <ArticleDetail>({
+  url: `article/${id}`,
+  method: 'DELETE'
+})
