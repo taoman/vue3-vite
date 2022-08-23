@@ -97,7 +97,7 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import type { UploadChangeParam } from 'ant-design-vue'
+import type { UploadChangeParam, UploadProps } from 'ant-design-vue'
 import {
   registerDetail,
   loginDetail,
@@ -105,10 +105,6 @@ import {
   getAvatar
 } from 'src/request/api/login'
 import { router } from 'src/router'
-import { clear } from 'console'
-// import { url } from 'inspector'
-// import { callbackify } from 'util'
-// import { watch } from 'fs'
 interface FormState {
   username: string
   password: string
@@ -124,7 +120,6 @@ const onFinish = (values: string) => {
 const onFinishFailed = (errorInfo: unknown) => {
   console.log('Failed:', errorInfo)
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getBase64 (img: any, callback: (base64Url: string) => void) {
   const reader = new FileReader()
   // eslint-disable-next-line n/no-callback-literal
@@ -135,16 +130,13 @@ const fileList = ref()
 const loading = ref<boolean>(false)
 const imageUrl = ref<string>('')
 
-const handleChange = async (info: UploadChangeParam) => {
+const handleChange = (info: UploadChangeParam) => {
   if (info.file.status === 'uploading') {
     loading.value = true
     return
   }
   if (info.file.status === 'done') {
     // Get this url from response in real world.
-    console.log('1212', fileList.value[0])
-    // const res = await avatarDetail(fileList.value[0].originFileObj)
-    // console.log('apk', res)
     getBase64(info.file.originFileObj, (base64Url: string) => {
       imageUrl.value = base64Url
       loading.value = false
@@ -156,11 +148,10 @@ const handleChange = async (info: UploadChangeParam) => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, no-undef
-const beforeUpload = (file: { type: string; size: number }) => {
+const beforeUpload = (file: { type: string; size: number; }) => {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
   if (!isJpgOrPng) {
-    message.error('You can only upload JPG file!')
+    message.error('You can only upload jpeg file!')
   }
   const isLt2M = file.size / 1024 / 1024 < 2
   if (!isLt2M) {
@@ -202,25 +193,22 @@ const test = async () => {
 const num = ref(1)
 onMounted(() => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   const dom: any = document.getElementById('box')
+//   dom.style.background =
+//     "url('https://liquanquan.top/assets/images/butterfly" +
+//     num.value +
+//     ".jpeg') center/cover no-repeat"
+//   setInterval(() => {
+  num.value = Math.ceil(Math.random() * 19)
+  // console.log('num', num.value)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dom: any = document.getElementById('box')
+  // console.log('appp', dom)
   dom.style.background =
     "url('https://liquanquan.top/assets/images/butterfly" +
     num.value +
     ".jpeg') center/cover no-repeat"
-  const quan = setInterval(() => {
-    num.value = Math.ceil(Math.random() * 19)
-    // console.log('num', num.value)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const dom: any = document.getElementById('box')
-    // console.log('appp', dom)
-    dom.style.background =
-    "url('https://liquanquan.top/assets/images/butterfly" +
-    num.value +
-    ".jpeg') center/cover no-repeat"
-  }, 3000)
-})
-onUnmounted(() => {
-  clearInterval()
+//   }, 3000)
 })
 </script>
 
@@ -228,11 +216,7 @@ onUnmounted(() => {
 .py-8 {
   padding-top: 13rem;
   padding-bottom: 2rem;
- -webkit-transition:all 0.5s linear;
-   -moz-transition:all 0.5s linear;
-   -ms-transition:all 0.5s linear;
-   -o-transition:all 0.5s linear;
-   transition:all 0.5s ;
+   transition:all 3.5s linear;
 }
 .button {
   display: flex;
