@@ -6,13 +6,11 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
-    ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
     ADrawer: typeof import('ant-design-vue/es')['Drawer']
     AForm: typeof import('ant-design-vue/es')['Form']
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
     AInputPassword: typeof import('ant-design-vue/es')['InputPassword']
-    APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     AppContent: typeof import('./src/components/AppContent.vue')['default']
     AppNav: typeof import('./src/components/AppNav.vue')['default']
     AppTinymce: typeof import('./src/components/AppTinymce.vue')['default']

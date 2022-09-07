@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-04-26 17:20:07
  * @LastEditors: taoman
- * @LastEditTime: 2022-07-08 10:59:32
+ * @LastEditTime: 2022-09-07 14:21:10
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import login from '../views/login.vue'
@@ -13,7 +13,6 @@ import ArticleDetail from 'src/views/articleDetail.vue'
 import Archive from 'src/views/archive.vue'
 import Write from 'src/views/write.vue'
 import NotFound from 'src/views/notFound.vue'
-import { negate } from 'lodash'
 export const routesModuleList = [
   {
     path: '/articleList',
@@ -66,7 +65,7 @@ const routes:RouteRecordRaw[] = [
 
 ]
 export const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(process.env.NODE_ENV === 'production' ? '/rem/' : '/'),
   routes
 })
 

@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import { resolve } from 'path'
 import compressPlugin from 'vite-plugin-compression'
+// import commonjs from '@rollup/plugin-commonjs'
+// import externalGlobals from 'rollup-plugin-external-globals'
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/rem/' : '/',
   server: {
     hmr: true,
     port: 3000,
@@ -28,10 +32,18 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['vue', 'ant-design-vue', 'tailwindcss']
+      // plugins: [
+      //   externalGlobals({
+      //     vue: 'Vue',
+      //     'ant-design-vue': 'AntDesignVue',
+      //     'vue-demi': 'VueDemi'
+      //   })
+      // ]
     }
   },
   plugins: [
     vue(),
+    vueSetupExtend(),
     compressPlugin({
       deleteOriginFile: true,
       threshold: 10240,
