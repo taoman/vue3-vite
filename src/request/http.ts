@@ -46,7 +46,7 @@ function addToken (config:AxiosRequestConfig):AxiosRequestConfig {
 instance.interceptors.response.use(response => {
   // eslint-disable-next-line no-constant-condition
   if (response.data.statusCode === 200 || 201) {
-    // message.success('请求成功')
+    message.success('请求成功')
     return Promise.resolve(response)
   }
 }, error => {
@@ -54,18 +54,19 @@ instance.interceptors.response.use(response => {
   if (error.response.data.statusCode) {
     switch (error.response.data.statusCode) {
       case 400:
-        message.error('账号或密码错误')
+        message.error(error.response.data.message)
         router.replace({
           path: '/login'
         })
         break
       case 401:
-        message.error('暂无权限')
+        message.error(error.response.data.message)
         router.replace({
           path: '/login'
         })
         break
       case 500:
+        message.error(error.response.data.message)
         break
     } return Promise.reject(error.res)
   }
