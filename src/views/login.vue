@@ -40,7 +40,7 @@
             <loading-outlined v-if="loading" />
             <plus-outlined v-else />
             <div class="ant-upload-text">
-              帅照
+              头像
             </div>
           </div>
         </a-upload>
@@ -96,8 +96,8 @@
 <script setup lang="ts">
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import type { UploadChangeParam, UploadProps } from 'ant-design-vue'
+import { ref, reactive, onMounted } from 'vue'
+import type { UploadChangeParam } from 'ant-design-vue'
 import {
   registerDetail,
   loginDetail,
@@ -148,7 +148,7 @@ const handleChange = (info: UploadChangeParam) => {
   }
 }
 
-const beforeUpload = (file: { type: string; size: number; }) => {
+const beforeUpload = (file: { type: string; size: number }) => {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
   if (!isJpgOrPng) {
     message.error('You can only upload jpeg file!')
@@ -178,6 +178,7 @@ const submit = async () => {
   console.log(res)
   sessionStorage.token = res.data.token
   sessionStorage.username = res.data.username
+  //   sessionStorage.avatar = res.data.path.replace('/home', 'liquanquan.top')
   if (res.statusCode === 200) {
     router.push('/')
   }
@@ -190,25 +191,14 @@ const test = async () => {
     console.log('500')
   }
 }
-const num = ref(1)
+const num = ref(0)
 onMounted(() => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   const dom: any = document.getElementById('box')
-//   dom.style.background =
-//     "url('https://liquanquan.top/assets/images/butterfly" +
-//     num.value +
-//     ".jpeg') center/cover no-repeat"
-//   setInterval(() => {
-  num.value = Math.ceil(Math.random() * 19)
-  // console.log('num', num.value)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  num.value = Math.ceil(Math.random() * 3)
   const dom: any = document.getElementById('box')
-  // console.log('appp', dom)
   dom.style.background =
-    "url('https://liquanquan.top/assets/images/butterfly" +
+    "url('/src/assets/images/butterfly" +
     num.value +
     ".jpeg') center/cover no-repeat"
-//   }, 3000)
 })
 </script>
 
@@ -216,7 +206,7 @@ onMounted(() => {
 .py-8 {
   padding-top: 13rem;
   padding-bottom: 2rem;
-   transition:all 3.5s linear;
+  transition: all 3.5s linear;
 }
 .button {
   display: flex;

@@ -69,8 +69,8 @@ export const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   const token = sessionStorage.token
-//   if (to.path !== '/login' && !token)next({ path: '/login' })
-//   else next()
-// })
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.token
+  if (to.path !== '/login' && !token)next({ path: '/login' })
+  else next()
+})

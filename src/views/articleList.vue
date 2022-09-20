@@ -65,9 +65,11 @@ const detail = (id: number) => {
 }
 const del = (id: number) => {
   Modal.confirm({
-    title: 'Are you sure?',
+    title: '确认要删除吗?',
     icon: createVNode(ExclamationCircleOutlined),
-    content: '删了就没了',
+    content: '',
+    okText: '确认',
+    cancelText: '取消',
     async onOk () {
       const res = await deleteDetail(id)
       init()
