@@ -29,10 +29,10 @@ const init = ref({
   automatic_uploads: true,
   width: '80%',
   height: 750,
-  language_url: '/tinymce/langs/zh_CN.js',
+  language_url: './tinymce/langs/zh_CN.js',
   language: 'zh_CN',
-  skin_url: '/tinymce/skins/ui/oxide',
-  content_css: '/tinymce/skins/content/default/content.css',
+  skin_url: './tinymce/skins/ui/oxide',
+  content_css: './tinymce/skins/content/default/content.css',
   plugins: 'save preview wordcount',
   branding: false,
   menubar: false
@@ -47,7 +47,7 @@ watch(() => props.value, (val) => {
 })
 const emits = defineEmits(['update:value'])
 const change = () => {
-  emits('update:value', tinymce.activeEditor.getContent())
+  emits('update:value', tinymce.activeEditor?.getContent())
 }
 onMounted(() => {
   tinymce.init({})

@@ -44,7 +44,7 @@
       @click="showDrawer"
     >
       <template #icon>
-        <bars-outlined style="color:#fff" />
+        <bars-outlined />
       </template>
     </a-button>
     <a-drawer

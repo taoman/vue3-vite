@@ -3,13 +3,21 @@
  * @Author: taoman
  * @Date: 2022-05-05 14:57:56
  * @LastEditors: taoman
- * @LastEditTime: 2022-06-09 11:08:42
+ * @LastEditTime: 2022-09-20 13:12:37
 -->
 <template>
   <div class="flex w-full flex-col justify-center">
     <AppTinymce v-model:value="state.value" />
-    <div class="text-center mt-4" @click="submit">
-      <a-button type="primary" class="bg-[#40a9ff] text-white"> 收录 </a-button>
+    <div
+      class="text-center mt-4"
+      @click="submit"
+    >
+      <a-button
+        type="primary"
+        class="bg-[#40a9ff] text-white"
+      >
+        收录
+      </a-button>
     </div>
   </div>
 </template>

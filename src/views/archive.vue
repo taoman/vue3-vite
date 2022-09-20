@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-05-05 14:51:55
  * @LastEditors: taoman
- * @LastEditTime: 2022-06-06 15:10:09
+ * @LastEditTime: 2022-09-20 14:41:11
 -->
 <template>
   <div class="h-full p-12">
@@ -22,7 +22,7 @@
           </div>
           <!-- eslint-disable vue/no-v-html -->
           <div
-            class="line-clamp-5 md:line-clamp-3"
+            class=" max-h-32 overflow-ellipsis overflow-hidden "
             v-html="item.content"
           />
         </a-timeline-item>

@@ -3,7 +3,7 @@
  * @Author: taoman
  * @Date: 2022-04-26 17:20:07
  * @LastEditors: taoman
- * @LastEditTime: 2022-09-07 14:21:10
+ * @LastEditTime: 2022-09-15 15:29:32
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import login from '../views/login.vue'
@@ -65,12 +65,12 @@ const routes:RouteRecordRaw[] = [
 
 ]
 export const router = createRouter({
-  history: createWebHashHistory(process.env.NODE_ENV === 'production' ? '/rem/' : '/'),
+  history: createWebHashHistory(),
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const token = sessionStorage.token
-  if (to.path !== '/login' && !token)next({ path: '/login' })
-  else next()
-})
+// router.beforeEach((to, from, next) => {
+//   const token = sessionStorage.token
+//   if (to.path !== '/login' && !token)next({ path: '/login' })
+//   else next()
+// })

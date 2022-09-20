@@ -12,10 +12,12 @@
               class="d-flex error-page-form"
             >
               <font style="color:#ffffff;font-size:21px;font-weight:bold;">
-                &nbsp;&nbsp;≧◉◡◉≦&nbsp;&nbsp;亲爱的不要急，来随便逛逛吧
+                &nbsp;&nbsp;≧◉◡◉≦&nbsp;&nbsp;亲爱的不要急，来随便逛逛吧&nbsp;&nbsp;<a href="https://liquanquan.top/rem">
+                  回到首页
+                </a>
               </font>
               <!-- <button type="submit">
-                <a href="https://liquanquan.top">liquanquan.top</a>
+                <a href="https://liquanquan.top/rem">liquanquan.top</a>
               </button> -->
             </div>
           </div>

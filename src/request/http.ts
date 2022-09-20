@@ -1,7 +1,6 @@
 import { message } from 'ant-design-vue'
 import axios, { AxiosRequestConfig, AxiosRequestHeaders, Method, ResponseType } from 'axios'
 import _ from 'lodash'
-import { config } from 'process'
 import { router } from 'src/router'
 type AnyObj = Record<string, any>;
 interface RequestType {

@@ -1,64 +1,31 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import { resolve } from 'path'
-import compressPlugin from 'vite-plugin-compression'
-// import commonjs from '@rollup/plugin-commonjs'
-// import externalGlobals from 'rollup-plugin-external-globals'
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/rem/' : '/',
-  server: {
-    hmr: true,
-    port: 3000,
-    proxy: {
-      '/article': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      }
-    }
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    chunkSizeWarningLimit: 1500,
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
+export default defineConfig(({ command, mode }) => {
+  const isTestMod = command === 'serve' && mode === 'development'
+  console.log('isTestMod', isTestMod)
+  return {
+    base: !isTestMod ? '/rem/' : '/',
+    build: {
+      outDir: 'rem',
+      assetsDir: 'assets',
+      chunkSizeWarningLimit: 1500,
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
       }
     },
-    rollupOptions: {
-      external: ['vue', 'ant-design-vue', 'tailwindcss']
-      // plugins: [
-      //   externalGlobals({
-      //     vue: 'Vue',
-      //     'ant-design-vue': 'AntDesignVue',
-      //     'vue-demi': 'VueDemi'
-      //   })
-      // ]
-    }
-  },
-  plugins: [
-    vue(),
-    vueSetupExtend(),
-    compressPlugin({
-      deleteOriginFile: true,
-      threshold: 10240,
-      algorithm: 'gzip',
-      ext: '.gz'
-    }),
-    Components({
-      resolvers: [
-        AntDesignVueResolver()
-      ]
-    })
-  ],
-  resolve: {
-    alias: {
-      src: resolve(__dirname, 'src')
+    plugins: [vue(), vueSetupExtend(), Components({ resolvers: [AntDesignVueResolver()] })],
+    resolve: {
+      alias: {
+        src: resolve(__dirname, 'src')
+      }
     }
   }
 })
