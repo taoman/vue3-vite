@@ -207,6 +207,15 @@ onMounted(() => {
   padding-top: 13rem;
   padding-bottom: 2rem;
   transition: all 3.5s linear;
+  animation: fadein 2s linear 1;
+}
+@keyframes fadein{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 .button {
   display: flex;
