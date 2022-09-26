@@ -63,7 +63,8 @@
         <div
           v-for="(item,key) in renderList"
           :key="key"
-          class="w-full h-10 leading-10 text-center"
+          class="w-full h-10 leading-10 text-center animate__animated  animate__fadeInRight "
+          :class="[`animate-delay-${key + 1}`]"
           @click="nav(item)"
         >
           {{ item.meta.title }}
@@ -74,6 +75,7 @@
 </template>
 
 <script setup lang='ts'>
+import 'animate.css'
 import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import { routesModuleList } from 'src/router'
 import { computed, ref } from 'vue'
@@ -81,6 +83,7 @@ import { mainStore } from 'src/store/index'
 import {
   BarsOutlined
 } from '@ant-design/icons-vue'
+import { clear } from 'console'
 const renderList = computed(() => {
   return routesModuleList.filter(item => !item.meta.hidden)
 })
@@ -89,6 +92,7 @@ const route = useRoute()
 const path = ref('/articleList')
 const nav = (e:RouteRecordRaw) => {
   visible.value = false
+
   path.value = e.path
   router.push(e.path)
 }
@@ -107,4 +111,5 @@ const showDrawer = () => {
 }
 </script>
 
-<style lang='scss' scoped></style>
+<style lang="scss" scoped>
+</style>

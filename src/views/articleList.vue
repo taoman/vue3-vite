@@ -27,7 +27,7 @@
         <div class="flex">
           <img
             class="w-8 h-8"
-            :src="item.avatar"
+            :src="tou"
           >
           <span class="ml-2 font-medium">{{ item.name }}</span>
         </div>

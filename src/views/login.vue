@@ -178,7 +178,7 @@ const submit = async () => {
   console.log(res)
   sessionStorage.token = res.data.token
   sessionStorage.username = res.data.username
-  //   sessionStorage.avatar = res.data.path.replace('/home', 'liquanquan.top')
+  sessionStorage.avatar = res.data.avatar
   if (res.statusCode === 200) {
     router.push('/')
   }
@@ -206,7 +206,7 @@ onMounted(() => {
 .py-8 {
   padding-top: 13rem;
   padding-bottom: 2rem;
-  transition: all 3.5s linear;
+  /* transition: all 3.5s linear; */
   animation: fadein 2s linear 1;
 }
 @keyframes fadein{
